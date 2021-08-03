@@ -1,0 +1,252 @@
+---
+title: "STAT 312 Homework 2"
+author: "Max Tjen"
+date: "7/18/21"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1:  
+Information on a packet of seeds claims that 42% of seed in the package produce large tomatoes, while 38% produce yellow tomatoes.  Assume that size and color are independent. What’s the probability that a given seed will produce a large tomato or a yellow tomato?(6 points)  
+
+P(large or yellow) = P(large) + P(yellow) + P(large and yellow)  
+P(large or yellow) = 0.42 + 0.38 + (0.42 * 0.38)  
+
+0.640  
+
+## Problem 2 (3.3.6):  
+In a NiCd battery, a fully charged cell is composed of nickelic hydroxide. Nickel is an element that has multiple oxidation states. Assume the following proportions of the states:  
+Nickel Charge  
+0 +2 +3 +4  
+Proportions Found  
+0.17 0.35 0.33 0.15  
+
+### a)  
+Determine the cumulative distribution function of the nickel charge.  
+
+----- **came out weird in pdf -> check rmarkdown for cleaner version**
+
+       { 0        x < 0  
+       { 0.17     0 <= x < 2  
+F(x) = { 0.35     2 <= x < 3  
+       { 0.33     3 <= x < 4  
+       { 0.15     4 <= x  
+
+### b)  
+Determine the mean and variance of the nickel charge.  
+
+```{r}
+mean = 0.17 * 0 + 0.35 * 2 + 0.33 * 3 + 0.15 * 4  
+variance = 0.17 * 0^2 + 0.35 * 2^2 + 0.33 * 3^2 + 0.15 * 4^2 - mean^2  
+```
+mean = 2.29, variance = 1.53
+
+### plot)  
+```{r}
+xVals = c(0, 2, 3, 4)
+yVals = c(0, 0.17, 0.52, 0.85, 1)
+
+plot(stepfun(x = xVals, y = yVals), xlab = 'charge', ylab= 'f(x)',
+     main ="CDF of Nickel Charge")
+grid()
+```
+
+## Problem 3 (3.5.10):  
+Heart failure is due to either natural occurrences (87%) or outside factors (13%). Outside factors are related to induced substances or foreign objects. Natural occurrences are caused by arterial blockage, disease, and infection. Suppose that 20 patients will visit an emergency room with heart failure. Assume that causes of heart failure for the individuals are independent.  
+
+### a)  
+What is the probability that three individuals have conditions caused by outside factors?  
+
+```{r}
+dbinom(3, 20, 0.13)
+```
+P(X = 3) = 0.235  
+
+### b)  
+What is the probability that three or more individuals have conditions caused by outside factors?
+
+```{r}
+zero = dbinom(0, 20, 0.13)
+one = dbinom(1, 20, 0.13)
+two = dbinom(2, 20, 0.13)
+```
+
+P(X >= 3) = P(X < 3)
+1 - P(0) - P(1) - P(2)
+P(X >= 3) = 0.492
+
+### c)  
+What are the mean and standard deviation of the number of individuals with conditions caused by outside factors?
+
+```{r}
+mean = 20 * 0.13
+sd = sqrt(20 * 0.13 * (1 - 0.13))
+```
+
+mean = 2.6, standard deviation = 1.5  
+
+## Problem 4 (3.6.6):  
+A player of a video game is confronted with a series of opponents and has an 80% probability of defeating each one. Success with any opponent is independent of previous encounters. Until defeated, the player continues to contest opponents.  
+Let X be the opponents faced
+
+### a)  
+What is the probability mass function of the number of opponents contested in a game?  
+
+P(X = x) = [(1 - 0.2)^(x - 1)] * 0.20, x > 0
+
+### b)  
+What is the probability that a player defeats at least two opponents in a game?  
+
+```{r}
+1 - (1 - 0.2)^(1 - 1) * 0.20 - (1 - 0.2)^(2 - 1) * 0.20
+```
+
+P(X >= 2) = P(X <= 2)  
+1 - P(X = 1) - P(X = 2)  
+1 - (1 - 0.2)^(1 - 1) * 0.20 - (1 - 0.2)^(2 - 1) * 0.20  
+P(X >= 2) = 0.64
+
+### c)  
+What is the expected number of opponents contested in a game?  
+
+```{r}
+1 / 0.2
+```
+
+5 opponents  
+
+### d)  
+What is the probability that a player contests four or more opponents in a game?  
+
+```{r}
+1 - (1 - 0.2)^(1 - 1) * 0.20 - (1 - 0.2)^(2 - 1) * 0.20  - (1 - 0.2)^(3 - 1) * 0.20
+```
+
+P(X >= 4) = P(X <= 3)  
+1 - P(X = 1) - P(X = 2)  
+1 - (1 - 0.2)^(1 - 1) * 0.20 - (1 - 0.2)^(2 - 1) * 0.20  - (1 - 0.2)^(3 - 1) * 0.20  
+P(X >= 4) = 0.512  
+
+## Problem 5 (4.3.2):  
+Suppose that f(x) = 0.125x for 0 < x < 4. Determine the mean and variance of X.  
+
+```{r}
+func = function(x) {x * (1/8) * x}
+mean = integrate(func,0,4)[1]
+mean
+
+functwo = function(x) {x^2 * (1/8) * x}
+val = integrate(functwo, 0, 4)[1]
+val
+
+variance = 8 - (8 / 3)^2
+variance
+```
+
+mean = 2.667, variance = 0.889
+
+## Problem 6 (4.5.12):  
+The demand for water use in Phoenix in 2003 hit a high of about 442 million gallons per day on June 27 (http://phoenix.gov/WATER/wtrfacts.html). Water use in the summer is normally distributed with a mean of 310 million gallons per day and a standard deviation of 45 million gallons per day. City reservoirs have a combined storage capacity of nearly 350 million gallons.
+
+### a)  
+What is the probability that a day requires more water than is stored in city reservoirs?  
+
+```{r}
+1 - pnorm(350, 310, 45)
+```
+
+P(X > 350) = 0.187
+
+### b)  
+What reservoir capacity is needed so that the probability that it is exceeded is 1%?  
+
+```{r}
+qnorm(.99,310,45)
+```
+
+414.686 million gallons  
+
+### c)  
+What amount of water use is exceeded with 95% probability?  
+
+```{r}
+qnorm(.05, 310, 45)
+```
+
+235.982 million gallons
+
+### d)  
+Water is provided to approximately 1.4 million people. What is the mean daily consumption per person at which the probability that the demand exceeds the current reservoir capacity is 1%? Assume that the standard deviation of demand remains the same.  
+
+```{r}
+gal = qnorm(.99, 310, 45)
+perPerson = gal / 1.4
+```
+
+296.204 gallons per person
+
+## Problem 7 (4.7.16):  
+An article in Ad Hoc Networks [“Underwater Acous- tic Sensor Networks: Target Size Detection and Performance Analysis” (2009, Vol. 7(4), pp. 803–808)] discussed an underwater acoustic sensor network to monitor a given area in an ocean. The network does not use cables and does not interfere with shipping activities. The arrival of clusters of signals generated by the same pulse is taken as a Poisson arrival process with a mean of lambda per unit time. Suppose that for a specific underwater acoustic sensor network, this Poisson process has a rate of 2.5 arrivals per unit time.  
+
+### a)  
+What is the mean time between 2.0 consecutive arrivals?  
+
+E(x) = 1 / 2.5
+E(x) = 0.4 arrivals  
+E(x) * 2  
+
+0.8 units time  
+
+### b) 
+What is the probability that there are no arrivals within 0.3 time units?  
+
+```{r}
+ppois(0, 2.5 * 0.3)
+```
+
+P(N[0.3] = 0) = 0.472   
+
+### c) 
+What is the probability that the time until the first arrival exceeds 1.0 unit of time?  
+
+```{r}
+ppois(0, 2.5)
+```
+
+P(N[1] = 0) = 0.082  
+
+### d) 
+Determine the mean arrival rate such that the probability is 0.9 that there are no arrivals in 0.3 time units.  
+
+```{r}
+ppois(0, 2.5)
+```
+
+mean = 0.35 arrivals per unit time
+
+## Problem 8 (4.10.8):  
+An article in Journal of Hydrology [“Use of a Lognormal Distribution Model for Estimating Soil Water Retention Curves from Particle-Size Distribution Data” (2006, Vol. 323(1), pp. 325–334)] considered a lognormal distribution model to estimate water retention curves for a range of soil textures. The particle-size distribution (in centimeters) was modeled as a lognormal random variable X with theta = −3.8 and omega = 0.7. Determine the following:  
+
+### a)  
+P(X < 0.02)  
+
+```{r}
+plnorm(.02, -3.8,.7)
+```
+
+P(X < 0.02) = 0.044
+
+### b) 
+Value for x such that P(X ≤ x) = 0.95  
+
+```{r}
+qlnorm(.95,-3.8,.7)
+```
+
+0.071

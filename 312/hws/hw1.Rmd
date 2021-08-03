@@ -1,0 +1,127 @@
+---
+title: "STAT 312 Homework 1"
+author: "Max Tjen"
+date: "7/11/21"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1: 
+An article in a women's magazine reported that women who nurse their babies feel warmer and more receptive towards their infants than mothers who bottle feed. This conclusion was based on the following scores from a questionnaire designed to measure warmth and receptivity, given to a random sample of 10 women from each group taken from recent hospital birth records (higher score represents more warmth and reception).
+
+Nurse:       48.4, 51.5, 45.0, 47.0, 46.9, 47.7, 49.9, 48.5, 45.6, 48.9
+Bottle feed: 42.5, 43.8, 44.5, 47.5, 44.5, 45.6, 43.4, 44.6, 47.1, 45.8
+
+### a)
+Is this an observational study or a controlled experiment?  Justify your answer. (2pt)
+
+This is an observational study because the data was collected from a survey of mothers rather than having a control group that is given a treatment, which in this case would be involve the mother bottle feeding.
+
+
+### b)
+Using SOCS, summarize the data for the two groups. (4pts)
+
+```{r}
+nurse  = c(48.4, 51.5, 45.0, 47.0, 46.9, 47.7, 49.9, 48.5, 45.6, 48.9)
+bottle = c(42.5, 43.8, 44.5, 47.5, 44.5, 45.6, 43.4, 44.6, 47.1, 45.8)
+
+# see value distribution
+hist(nurse)
+hist(bottle)
+
+# look for outliers
+boxplot(nurse)
+summary(nurse)
+nurseIQR = summary(nurse)[5] - summary(nurse)[2]
+summary(nurse)[5] + nurseIQR
+summary(nurse)[2] - nurseIQR
+sort(nurse)
+
+boxplot(bottle)
+summary(bottle)
+bottleIQR = summary(bottle)[5] - summary(bottle)[2]
+summary(bottle)[5] + bottleIQR
+summary(bottle)[2] - bottleIQR
+sort(bottle)
+
+# find center representative values
+mean(nurse)
+median(nurse)
+
+mean(bottle)
+median(bottle)
+
+# find the spread of data
+var(nurse)
+sd(nurse)
+range(nurse)
+range(nurse)[2]-range(nurse)[1]
+summary(nurse)
+
+var(bottle)
+sd(bottle)
+range(bottle)[2]-range(bottle)[1]
+summary(bottle)
+```
+
+nurse SOCS  
+left skewed, two outliers (45.0, 51.5), mean = 47.94, median = 48.05, variance = 3.79, standard deviation = 1.95, range = 6.50  
+5 point summary: min = 45, Q1 = 46.92, Q2 = 48.05, Q3 = 48.8, max = 51.5
+  
+bottle SOCS  
+right skewed, no outliers, mean = 44.93, median = 44.55, variance = 2.50, standard deviation = 1.58, range = 5.0  
+5 point summary: min = 42.5, Q1 = 43.98, Q2 = 44.55, Q3 = 45.75, max = 47.5
+
+
+### c)
+Using your descriptions in part b, compare the scores in the two groups. (2pts)
+
+The two datasets provide data that seems to point show that nursing an infant rather than bottlefeeding them makes the mother more warm and receptive to the baby. This can be seen by the mother's having both a higher mean and median score when nursing rather than bottlefeeding, as the nurse data had a mean score that was 3.01 higher than the bottlefeeding mean and the nurse median score was 3.5 higher than the bottlefeeding median respectively. The nurse data had two outliers, which were the minimum and maximum values, while the bottle data had no outliers, albeit the maximum value was close to being so. The standard deviations of both datasets are pretty small, with the nurse data having a standard deviation of 1.95 and the bottle data having a standard deviation of 1.58. Given that there are two outliers in the nurse data, it makes sense that the standard deviation is a bit bigger than the bottle data. The range values for each was 6.5 for the nurse data and 5.0 for the bottle data. With the ranges and standard deviations of each dataset, it seems like the bottle data is more similar than the nurse data as there is less spread across the data. These values of data spread reinforce the idea that both datasets have pretty precise data. 
+
+
+### d)
+If you or your partner were thinking about breast feeding, what effect would this study have on your decision? Why? (2 pts)
+
+This study would somewhat affect the decision because it seems like for the most part, mothers who nursed their babies felt warmer and more receptive towards them relative to mothers who decided to bottle feed their baby. As such, it would probably be better for the relationship between the mother and their baby if there was more warmth and reception between them.
+
+
+
+## Problem 2: 
+Do the following problem from Chapter 6 in MR (Textbook: Montgomery & Runger): 6.S17(2+4+3+1=10pts)  
+  
+One of the authors (DCM) has a Mercedes-Benz 500 SL Roadster. It is a 2003 model and has fairly low mileage (currently 60,112 miles on the odometer). He is interested in learning how his car’s mileage compares with the mileage on similar SLs. The table below contains the mileage on 100 Mercedes-Benz SLs from the model years 2003–2009 taken from the Cars.com website.
+
+### a)
+Calculate the sample mean and standard deviation of the odometer readings.
+```{r}
+mileage = read.csv('hw1.csv')  # file is just the column of data 
+mean(mileage$Mileage.Data)
+sd(mileage$Mileage.Data)
+```
+mean = 34,232.05, standard deviation = 20,414.52
+
+### b)
+Construct a histogram of the odometer readings and comment on the shape of the data distribution.
+```{r}
+hist(mileage$Mileage.Data)
+summary(mileage$Mileage.Data)
+```
+The shape of the odometer readings appear to be right skewed. This can be confirmed by finding the mean and median, which shows that the mean is greater than the median.
+
+### c)
+Construct a stem-and-leaf diagram of the odometer readings.
+```{r}
+stem(mileage$Mileage.Data, scale = 2)
+```
+
+### d)
+What is the percentile of DCM’s mileage?
+```{r}
+quantile(mileage$Mileage.Data, probs = seq(.1, .9, by = .1))
+quantile(mileage$Mileage.Data, probs = seq(.8, .9, by = .01))
+```
+DCM's mileage is in the 85th percentile of this data
