@@ -1,0 +1,43 @@
+---
+title: "STAT312 R Lab 2"
+author: "Max Tjen"
+date: "7/8/21"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1: 
+The energy consumption for 90 gas-heated homes during a winter heating season is given in the file "Energy_Usage.csv" (see Data module on canvas). The variable reported is BTU/number of heating degree day. 
+
+### a) 
+Use R codes to find the five point summary, mean and standard devaition of the data. (4 points)
+
+```{r}
+usage = read.csv('Energy_Usage.csv')
+summary(usage)
+sd(usage$BTU)
+```
+Ans:  
+5 point summary: min = 2.970, Q1 = 7.947, median/Q2 = 9.835, Q3 = 12.045, max = 18.260  
+mean: 10.038  
+standard deviation: 2.868
+
+### b) 
+Construct a histogram and a stem-and-leaf diagram of energy usage. Use appropriate scale for the stem-and-leaf diagram. Then use SOCS method to describe the data. (6 points)
+
+```{r}
+hist(usage$BTU)
+stem(usage$BTU, scale = 2)
+boxplot(usage)
+range(usage)
+range(usage)[2] - range(usage)[1]
+```
+Ans:  
+The energy usage data is right skewed as while the histogram looks relatively symmetrical, the mean is greater than the median. There are not any outliers in the data and the center values of it consist of a mean = 10.038 and a median of 9.835. For the spread of the data, the range is 15.29, the standard deviation is 2.868, and the quartile values are Q1 = 7.947, Q2 = 9.835, Q3 = 12.045
+
+
