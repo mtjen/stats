@@ -1,0 +1,66 @@
+---
+title: "STAT 312 Quiz 1"
+author: "Max Tjen"
+date: "7/13/21"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1: 
+
+Disks of polycarbonate plastic from a supplier are analyzed for scratch and shock resistance. The results from 100 disks are summarized as follows: Let A denote the event that a disk has high shock resistance, and let B denote the event that a disk has high scratch resistance. If a disk is selected at random, determine the following probabilities: (6 points)  
+
+### a)
+P(A) = 0.86
+
+### b)
+P(B) = 0.79
+
+### c)
+P(A') = 0.14
+
+### d)
+P(A n B) = 0.70
+
+### e)
+P(A u B) = 0.95
+
+### f)
+P(A' u B) = 0.84
+
+## Problem 2:  
+
+Suppose that a certain company sends 40% of its overnight mail parcels by service S1, 50% of its overnight mail parcels by service S2, and 10% of its overnight mail parcels by service S3. 98% of those sent by S1 arrive on time, 99% of those sent by S2 arrive on time, 95% of those sent by S3 arrive on time.  A parcel is selected at random from the list of those sent one night.  
+
+Event -> the probability a parcel arrives on time using a service  
+Key ->  
+A = arrived  
+N = not arrived  
+
+### a)  
+What is the probability that it arrives on time? (4points)  
+
+P(A) = P(S1) * P(A|S1) + P(S2) * P(A|S2) + P(S3) * P(A|S3)  
+P(A) = (0.4)(0.98) + (0.5)(0.99) + (0.1)(0.95)  
+P(A) = 0.392 + 0.495 + 0.095  
+P(A) = 0.982  
+
+### b)  
+Given that it arrives on time, what is the probability that it was sent by service S1?(3points)  
+
+P(S1|A) = [P(S1) * P(A|S1)] / [P(A)]  
+P(S1|A) = [(0.4)(0.98)] / [0.982]  
+P(S1|A) = [0.392] / [0.982]  
+P(S1|A) = 0.399  
+
+### c)
+Given that it arrives late, what is the probability that it was sent by service S1? (3points)  
+
+P(S1|N) = [P(S1) * P(N|S1)] / [P(A')]  
+P(S1|N) = [(0.4)(0.02)] / [1 - 0.982]  
+P(S1|N) = [0.008] / [0.018]  
+P(S1|N) = 0.444

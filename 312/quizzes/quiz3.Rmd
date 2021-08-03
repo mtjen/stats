@@ -1,0 +1,42 @@
+---
+title: "STAT 312 Quiz 3"
+author: "Max Tjen"
+date: "7/21/21"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1: 
+X and Y are normal random variables with E(X) = 2, V(X) = 5, E(Y) = 6, V(Y) = 8 and Cov(X,Y)=2.  
+
+### a)  
+E(3X + 2Y) (2 points)  
+
+3 * E(X) + 2 * E(Y)  
+3 * 2 + 2 * 6  
+6 + 12  
+
+mean = 18
+
+### b)  
+V(3X + 2Y) (4 points)  
+
+3^2 * 5 + 2^2 * 8 + (2 * 3 * 2 * 2)
+45 + 32 + 24  
+
+variance = 101  
+
+### c)  
+Find P(3X + 2Y > 20) (4 points) 
+
+```{r}
+1 - pnorm(20, 18, sqrt(101))
+```
+
+1 - pnorm(20, 18, sqrt(101))  
+
+0.421

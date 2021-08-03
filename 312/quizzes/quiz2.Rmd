@@ -1,0 +1,34 @@
+---
+title: "STAT 312 Quiz 2"
+author: "Max Tjen"
+date: "7/15/21"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1: 
+
+The time until recharge for a battery in a laptop computer under common conditions is normally distributed with a mean of 260 minutes and a standard deviation of 50 minutes.  
+
+### a)
+What is the probability that a battery lasts more than four hours? (2 points)  
+```{r}
+prob = pnorm(240, 260, 50)
+1 - prob
+```
+Ans: P(4 hours or 240 minutes) = 0.655
+
+### b)
+What are the quartiles (the 25% and 75% values) of battery life? (4 points)  
+
+```{r}
+qnorm(.25, 260, 50)
+qnorm(.75, 260, 50)
+```
+Ans:  
+25% = 226.3 minutes or 3.77 hours  
+75% = 293.7 minutes or 4.90 hours
