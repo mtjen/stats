@@ -1,0 +1,38 @@
+---
+title: "R Lab 4"
+author: "Max Tjen"
+date: "7/26"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1:
+
+A random sample of 16 Americans in a city yielded the following data on the number of pounds of beef consumed per year: 118 ,115.125,110, 112, 130,117 ,112 ,115 ,120, 113, 118, 119, 122, 123, 126.  
+
+
+### a) (4 points)
+Construct a quantile-quantile plot for the data to check if the annual beef consumtion in the given city can be modelled by a normal distribution.  
+
+```{r}
+data = c(118, 115, 125, 110, 112, 130, 117, 112, 115, 120, 113, 118, 119, 122, 123, 126)
+qqnorm(data)
+qqline(data) 
+```
+Ans: The data can be modeled by a normal distribution because the data is mostly along the line of best fit  
+
+### b) (4+2=6 points)  
+Construct a two sided 95% confidence interval for the mean beef consumption of the people in the given city and interpret it.  
+
+```{r}
+t.test(data, mu = 0, alternative = "two.sided", conf.level=0.95)
+```
+
+Ans: 95% CI = (115.4234, 121.4516)  
+Since there is a 95% chance that the random intervals cover the value of μ, we expect 95% of the intervals to cover the actual value of μ
+

@@ -1,0 +1,67 @@
+---
+title: "R Lab 3"
+author: "Max Tjen"
+date: "7/19/21"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1:  
+
+Generate 100 random samples from a Normal distribution with mean 10 and standard deviation 5. Plot the histogram of the samples, where the height of the bars are the relative frequencies. Define a vector of length 100, starting at -10 and ending at 30 and the elements being equidistant (hint: use the seq function). Then compute the pdf of the above Normal distribution on the elements of this vector and plot it on top of the histogram. (5 points)
+
+```{r}
+set.seed(20)
+x = rnorm(100, 10, 5)
+vector = seq(-10, 30, length.out = 100)
+
+hist(x, col = 'pink', main = 'PDF of Normal Distribution', probability = T,
+     xlab = 'x', ylab = 'f(x)', ylim=c(0,0.1))
+
+lines(vector, dnorm(vector, 10, 5), col = 'blue')
+
+legend('topright', c('emperical pdf', 'theoretical pdf'), lty = c(1,1), col =
+                       c('pink', 'blue'))
+```
+
+
+## Problem 2: 
+
+Simulation Study
+
+### a) 
+Simulate 100 random numbers from a Normal distribution with mean 5 and variance 4. Use set.seed so that the same samples are obtained each time you run the code. Store the samples with variable name X. Use quantile-quantile plot to see if the  distrbution of the sample is close to a normal distribution. Interpret the plot. You can use the default qqnorm and qqplot function or the qqPlot function from the "qualitytool" package in R. (4 points)
+
+```{r}
+set.seed(20)
+X = rnorm(100, 5, 2)
+qqnorm(X)
+qqline(X)
+```
+Ans: The distribution of the sample is pretty normal as the data points relatively follow a straight line
+
+### b) 
+Make a transformation Y=exp(X). Now Y can be considered as a random sample of size 100 from a log Normal distribution with $\mu=5$ and $\omega = 2$. 
+Plot a histogram on Y. Comment on the shape of the distribution of Y (3)
+
+```{r}
+Y = exp(X) # X is from the previous part
+hist(Y)
+```
+Ans: The distribution of Y is heavily right skewed
+
+### c)
+Use qqPlot function with the distrbution name "lognormal" to contruct a quantile quantile plot on Y. Interpret the plot. Don't forget to install and load the packages "qualityTools" and "MASS". (3 points)
+
+```{r}
+library(qualityTools)
+library(MASS)
+qqPlot(Y, 'lognormal')    # Y from previous part
+```
+Ans: The distribution is normal as almost all the points, probably over 99% of them, follow a straight line with the exception of a few outliers
+
